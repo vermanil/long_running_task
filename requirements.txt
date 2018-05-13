@@ -1,4 +1,4 @@
 flask
 celery
 redis
-flask-mysql
+sqlalchemy

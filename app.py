@@ -1,22 +1,22 @@
 from flask import Flask, render_template
-from os import environ
-from celery import Celery
-
-def configure_celery(app):
-    # set redis url vars
-    app.config['CELERY_BROKER_URL'] = environ.get('REDIS_URL', 'redis://localhost:6379/0')
-    app.config['CELERY_RESULT_BACKEND'] = app.config['CELERY_BROKER_URL']
-
-    celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-    celery.conf.update(app.config)
-    
-    return celery
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from models import Base, Task, FileInfo
+from celery_config import configure_celery
 
 app = Flask(__name__)
 celery = configure_celery(app)
 
+# Databse connection
+engine = create_engine('sqlite:///long_running_task.db')
+Base.metadata.bind = engine
+
+DBSession = sessionmaker(bind=engine)
+dbsession = DBSession()
+
 @app.route('/')
 def landing_page():
+    # print dbsession.query(Task).all()
     return render_template('fileUpload.html')
 
 @app.route('/upload-file')
