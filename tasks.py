@@ -1,6 +1,6 @@
-from celery.decorators import task
+# from celery.decorators import shared_task
 
-@task
-def hello():
-	print "dhbhfdbfhgbfhdj"
+# @shared_task
+# def dine():
+# 	print "dhbhfdbfhgbfhdj"
 
