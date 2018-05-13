@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+
+{% block content %}
+    
+<h3>Upload your file</h3>
+
+<form class="md-form" action="/upload-file" id = "form">
+    <div class="file-field">
+        <div class="btn btn-primary btn-sm float-left">
+            <span>Choose file</span>
+            <input type="file">
+        </div>
+    </div>
+</form>
+
+<button type="submit" form="form" value="Submit">Submit</button>
+
+{% endblock %}
